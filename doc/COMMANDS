@@ -6,6 +6,8 @@ git add *
 rails generate active_admin:install
 rake db:migrate
 
+AdminUser.create!(:email => 'admin@example.com', :password => 'password', :password_confirmation => 'password')
+
 Github
 
 rails g model GithubAccount type:string login_name:string avatar_url:string api_url:string html_url:string following:integer public_repos:integer public_gists:integer followers:integer registed_at:datetime
@@ -22,3 +24,9 @@ t.belongs_to :github_accounts
 rails generate active_admin:resource GithubAccount
 
 rails generate active_admin:resource GithubRepository
+
+rails g model Watching
+
+rails g migration add_owner_id_to_github_repository owner_id:integer
+
+rails generate active_admin:resource Watching
