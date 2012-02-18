@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  type: 
+  login_name: MyString
+  avatar_url: MyString
+  api_url: MyString
+  html_url: MyString
+  following: 
+  public_repos: 
+  public_gists: 
+  followers: 
+  registed_at: 2012-02-18 17:06:41
+
+two:
+  type: 
+  login_name: MyString
+  avatar_url: MyString
+  api_url: MyString
+  html_url: MyString
+  following: 
+  public_repos: 
+  public_gists: 
+  followers: 
+  registed_at: 2012-02-18 17:06:41

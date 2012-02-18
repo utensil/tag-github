@@ -1,0 +1,2 @@
+class GithubUser < GithubAccount
+end

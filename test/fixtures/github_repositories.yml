@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  description: MyText
+  language: MyString
+  fork: false
+  private: false
+  homepage_url: MyString
+  api_url: MyString
+  html_url: MyString
+  clone_url: MyString
+  ssh_url: MyString
+  watchers: 
+  forks: 
+  readme: MyText
+
+two:
+  name: MyString
+  description: MyText
+  language: MyString
+  fork: false
+  private: false
+  homepage_url: MyString
+  api_url: MyString
+  html_url: MyString
+  clone_url: MyString
+  ssh_url: MyString
+  watchers: 
+  forks: 
+  readme: MyText

@@ -1,0 +1,2 @@
+class GithubOrg < GithubAccount
+end
