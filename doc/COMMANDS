@@ -1,0 +1,4 @@
+rails new tag-github
+git init
+vim .gitignore
+git add .
