@@ -30,3 +30,9 @@ rails g model Watching
 rails g migration add_owner_id_to_github_repository owner_id:integer
 
 rails generate active_admin:resource Watching
+
+
+
+https://api.github.com/repos/utensil/nano-misc
+https://api.github.com/users/jruby
+https://api.github.com/users/utensil/watched

@@ -1,4 +1,11 @@
 ActiveAdmin.register GithubAccount do
+  form do |f|
+    f.inputs do
+      f.input :login_name
+    end
+    f.buttons
+  end
+
   show do
     panel "User Info" do
       attributes_table_for github_account, :login_name, :registed_at
@@ -15,4 +22,5 @@ ActiveAdmin.register GithubAccount do
   sidebar "Activities", :only => :show do
     attributes_table_for github_account, :following, :followers, :public_repos, :public_gists
   end
+
 end
