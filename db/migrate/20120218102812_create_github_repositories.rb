@@ -15,8 +15,6 @@ class CreateGithubRepositories < ActiveRecord::Migration
       t.integer :forks
       t.text :readme
 
-      t.belongs_to :github_accounts
-
       t.timestamps
     end
   end

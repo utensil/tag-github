@@ -1,8 +1,8 @@
 class CreateWatchings < ActiveRecord::Migration
   def change
     create_table :watchings do |t|
-      t.integer :github_account_id
-      t.integer :github_repository_id
+      t.belongs_to :github_account
+      t.belongs_to :github_repository
 
       t.timestamps
     end

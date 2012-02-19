@@ -39,20 +39,25 @@ class WatchedReposUpdateWorker
         break if watched_reps.empty?
         watched_reps.each do |rep|
           unless acc.watched_repositories.exists?(:name => rep['name'])
+
+            owner = rep['owner'] || { 'login' => ''}
+            owner_account_name = owner['login']
+
             acc.watched_repositories.build(
               :name => rep['name'],
               :description => rep['description'],
               :language => rep['language'],
               :fork => rep['fork'],
               :private => rep['private'],
-              :homepage_url => rep['homepage_url'],
-              :api_url => rep['api_url'],
+              :homepage_url => rep['homepage'],
+              :api_url => rep['url'],
               :html_url => rep['html_url'],
               :clone_url => rep['clone_url'],
               :ssh_url => rep['ssh_url'],
               :watchers => rep['watchers'],
               :forks => rep['forks'],
-              :readme => rep['readme']
+              :readme => rep['readme'],
+              :owner_account_name => owner_account_name
             )
           end
         end
