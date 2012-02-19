@@ -15,7 +15,7 @@ ActiveAdmin.register GithubAccount do
     end
   end
 
-  show do
+  show :title => :login_name do
     panel "User Info" do
       if github_account.avatar_url
         div do
@@ -25,8 +25,7 @@ ActiveAdmin.register GithubAccount do
         end
       end
       attributes_table_for github_account do
-        row(:login_name)
-        row(:registed_at)
+        row("Registered Since") { |acc| acc.registed_at }
         row("Watched Repositories") { |acc| acc.watched_repositories.size }
       end
     end

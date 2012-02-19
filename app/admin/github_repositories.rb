@@ -21,6 +21,15 @@ ActiveAdmin.register GithubRepository do
         row(:readme)
       end
     end
+
+    if github_repository.watched_accounts.size > 0
+      panel "Watched Accounts" do
+          table_for(github_repository.watched_accounts) do
+            column("Account Name") {|acc| link_to acc.login_name, admin_github_account_url(acc), :target => '_blank' }
+            column("Registered Since", :registed_at)
+          end
+      end
+    end
   end
 
   sidebar "Network", :only => :show do
