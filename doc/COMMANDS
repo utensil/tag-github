@@ -36,3 +36,23 @@ rails generate active_admin:resource Watching
 https://api.github.com/repos/utensil/nano-misc
 https://api.github.com/users/jruby
 https://api.github.com/users/utensil/watched
+
+
+bundle exec sidekiq
+
+redis-cli
+> info
+> monitor
+> smembers workers
+
+
+1329637322.068338 "get" "503fe10dedb8dd2f8fee2f22a01a8bd1"
+1329637322.069419 "setex" "503fe10dedb8dd2f8fee2f22a01a8bd1" "1800" "1"
+1329637322.070061 "sadd" "queues" "default"
+1329637322.070968 "rpush" "queue:default" "{\"class\":\"WatchedReposUpdateWorker\",\"args\":[\"bingyi\"]}"
+1329637322.460447 "lpop" "queue:default"
+1329637322.583785 "lpop" "queue:default"
+1329637322.598022 "multi"
+1329637322.613343 "set" "worker:utensil-mint-vm:4885-92670840:default:started" "2012-02-19 15:42:02 +0800"
+1329637322.613389 "set" "worker:utensil-mint-vm:4885-92670840:default" "{\"queue\":\"default\",\"payload\":{\"class\":\"WatchedReposUpdateWorker\",\"args\":[\"bingyi\"]},\"run_at\":\"2012/02/19 15:42:02 HKT\"}"
+1329637322.613448 "exec"
