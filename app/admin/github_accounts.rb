@@ -1,4 +1,17 @@
 ActiveAdmin.register GithubAccount do
+
+  scope :all, :default => true
+  scope :user do |accs|
+    accs.where(:type => 'GithubUser')
+  end
+
+  scope :organization do |accs|
+    accs.where(:type => 'GithubOrg')
+  end
+
+  filter :login_name
+  filter :registed_at, :label => "Registered Since"
+
   form do |f|
     f.inputs do
       f.input :login_name
@@ -12,11 +25,19 @@ ActiveAdmin.register GithubAccount do
       a :href => admin_github_account_path(acc) do
         image_tag(acc.avatar_url, :size => '80x80', :alt => acc.login_name)
       end
+      div do
+        span do
+          link_to 'edit', edit_admin_github_account_path(acc)
+        end
+        span do
+          link_to 'delete', admin_github_account_path(acc), :method => 'delete', :confirm => "Are you sure to delete Github account '#{acc.login_name}'?"
+        end
+      end
     end
   end
 
   show :title => :login_name do
-    panel "User Info" do
+    panel "Account Info" do
       if github_account.avatar_url
         div do
           a :href => github_account.html_url do
@@ -25,6 +46,8 @@ ActiveAdmin.register GithubAccount do
         end
       end
       attributes_table_for github_account do
+        row("Account Type") { |acc| acc.type == 'GithubUser' ?
+        'User' : 'Organization' }
         row("Registered Since") { |acc| acc.registed_at }
         row("Watched Repositories") { |acc| acc.watched_repositories.size }
       end

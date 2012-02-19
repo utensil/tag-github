@@ -14,6 +14,8 @@ ActiveAdmin::Dashboards.build do
   #       end
   #     end
   #   end
+
+  #TODO remove all these test codes
   section "Languages", :priority => 1 do
     lang_stat = {}
 

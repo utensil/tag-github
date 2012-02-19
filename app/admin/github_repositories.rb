@@ -1,5 +1,14 @@
 ActiveAdmin.register GithubRepository do
 
+  filter :owner_account_name, :label => "Owner"
+  filter :name
+  filter :language, :as => :select, :collection => proc { GithubRepository.pluck(:language).uniq }
+  filter :description
+  filter :readme
+  filter :homepage_url
+  filter :watchers
+  filter :forks
+
   index do
     column("Name", :sortable => :name) {|repos| link_to repos.name, repos.html_url, :target => '_blank' }
     column("Description", :sortable => false) do |repos|
