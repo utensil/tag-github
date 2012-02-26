@@ -23,6 +23,7 @@ Implemented
 TODO
 -----
 
+* Uniq DB primary keys
 * Fetch README for repositories, so we can know more without having to leave the app.
 * Tagging
 * ...

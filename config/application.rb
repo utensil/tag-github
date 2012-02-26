@@ -58,6 +58,7 @@ module TagGithub
 
     # CUSTOMIZE BEGIN
     config.log_tags = [ :uuid, :remote_ip ]
+    config.autoload_paths += %W(#{Rails.root}/lib)
     # CUSTOMIZE END
   end
 end

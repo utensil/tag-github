@@ -27,10 +27,10 @@ ActiveAdmin.register GithubAccount do
       end
       div do
         span do
-          link_to 'edit', edit_admin_github_account_path(acc)
+          link_to image_tag('http://cdn.dustball.com/user_edit.png',:alt => '[delete]', :title => 'delete'), edit_admin_github_account_path(acc)
         end
         span do
-          link_to 'delete', admin_github_account_path(acc), :method => 'delete', :confirm => "Are you sure to delete Github account '#{acc.login_name}'?"
+          link_to image_tag('http://cdn.dustball.com/user_delete.png',:alt => '[delete]', :title => 'delete'), admin_github_account_path(acc), :method => 'delete', :confirm => "Are you sure to delete Github account '#{acc.login_name}'?"
         end
       end
     end
@@ -46,8 +46,8 @@ ActiveAdmin.register GithubAccount do
         end
       end
       attributes_table_for github_account do
-        row("Account Type") { |acc| acc.type == 'GithubUser' ?
-        'User' : 'Organization' }
+        row("Account Type") { |acc| acc.type.nil? ? nil : (acc.type == 'GithubUser' ?
+        'User' : 'Organization') }
         row("Registered Since") { |acc| acc.registed_at }
         row("Watched Repositories") { |acc| acc.watched_repositories.size }
       end

@@ -9,7 +9,7 @@ class WatchedReposUpdateWorker
       acc = GithubAccount.find_or_create_by_login_name(account_name)
 
       user_api_uri = "https://api.github.com/users/#{account_name}"
-      gu = JSON.parse(uri_get(user_api_uri))
+      gu = JSON.parse(MiscUtil.uri_get(user_api_uri))
 
       raise "login_name should be #{self.login_name}, got #{gu['login_name']}" if acc.login_name != gu['login']
 
@@ -28,7 +28,7 @@ class WatchedReposUpdateWorker
         i += 1
 
         watched_api_uri = "https://api.github.com/users/#{account_name}/watched?per_page=100&page=#{i}"
-        watched_reps = JSON.parse(uri_get(watched_api_uri))
+        watched_reps = JSON.parse(MiscUtil.uri_get(watched_api_uri))
 
         #conditon to stop the loop
         break if watched_reps.empty?
@@ -69,26 +69,26 @@ class WatchedReposUpdateWorker
         #save on every page so there won't be a peak
         acc.save
         #TODO should I sleep and let Github rest a while?
+        sleep 0.1
+
+        acc.watched_repositories.each do |repos|
+          update_readme(repos.name)
+          sleep 0.1
+        end
       end
-
-
   end
 
-  def uri_get(uri)
-    response = nil
-    uri = URI(uri)
+  private
 
-    logger.info "Calling [#{uri.to_s}]"
 
-    Net::HTTP.start(uri.host, uri.port,
-      :use_ssl => uri.scheme == 'https') do |http|
-      request = Net::HTTP::Get.new uri.request_uri
+  def update_readme(repos_name)
+    repos = GithubRepository.where(:name => repos_name).first
 
-      response = http.request request # Net::HTTPResponse object
-    end
+    return if repos.nil? || repos.html_url.blank?
 
-    logger.info "Got [#{response.body[0, 512]}]..."
+    h = Hpricot.parse(MiscUtil.uri_get(repos.html_url))
+    repos.readme = h.search('#readme').to_s
 
-    response.body
+    repos.save
   end
 end
