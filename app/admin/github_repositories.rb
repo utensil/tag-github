@@ -1,5 +1,13 @@
 ActiveAdmin.register GithubRepository do
 
+  scope :all, :default => true
+  scope :incomplete do |repos|
+    repos.search(:readme_is_blank => true)
+  end
+  scope :complete do |repos|
+    repos.search(:readme_is_blank => false)
+  end
+
   filter :owner_account_name, :label => "Owner"
   filter :name
   filter :language, :as => :select, :collection => proc { GithubRepository.pluck(:language).uniq }
@@ -8,6 +16,7 @@ ActiveAdmin.register GithubRepository do
   filter :homepage_url
   filter :watchers
   filter :forks
+
 
   collection_action :delete_all, :method => :delete do
     GithubRepository.delete_all
@@ -57,9 +66,7 @@ ActiveAdmin.register GithubRepository do
         row("Home Page") { |repos| link_to(repos.homepage_url, repos.homepage_url, :target => '_blank') unless repos.homepage_url.blank? || repos.homepage_url == repos.html_url }
         row(:updated_at)
         row("Readme") do |repos|
-          if repos.readme.nil?
-                nil
-          else
+          unless repos.readme.blank?
             div :style => 'height: 500px; overflow:scroll' do
             #TODO safe?
               raw repos.readme

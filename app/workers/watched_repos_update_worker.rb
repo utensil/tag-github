@@ -84,7 +84,7 @@ class WatchedReposUpdateWorker
   def update_readme(repos_name)
     repos = GithubRepository.where(:name => repos_name).first
 
-    return if repos.nil? || repos.html_url.blank?
+    return if repos.nil? || repos.html_url.blank? || !repos.readme.blank?
 
     h = Hpricot.parse(MiscUtil.uri_get(repos.html_url))
     repos.readme = h.search('#readme').to_s

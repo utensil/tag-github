@@ -30,6 +30,8 @@ gem 'sidekiq'
 
 gem 'hpricot'
 
+gem 'acts-as-taggable-on', '~> 2.2.2'
+
 group :development do
   gem 'thin'
 end

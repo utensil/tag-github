@@ -56,3 +56,7 @@ redis-cli
 1329637322.613343 "set" "worker:utensil-mint-vm:4885-92670840:default:started" "2012-02-19 15:42:02 +0800"
 1329637322.613389 "set" "worker:utensil-mint-vm:4885-92670840:default" "{\"queue\":\"default\",\"payload\":{\"class\":\"WatchedReposUpdateWorker\",\"args\":[\"bingyi\"]},\"run_at\":\"2012/02/19 15:42:02 HKT\"}"
 1329637322.613448 "exec"
+
+jQuery('table#github_repositories thead tr').prepend(jQuery('<th class="tag">Tag</th>'));
+jQuery('table#github_repositories tbody tr').prepend(jQuery('<td><input type="checkbox" /></td>'));
+jQuery('#titlebar_right .action_items').append(jQuery('<span class="action_item"><a href="#">Add Tags...</a></span>'))
