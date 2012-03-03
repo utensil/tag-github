@@ -26,12 +26,27 @@ ActiveAdmin.register GithubRepository do
 
   collection_action :tag, :method => :post do
 
-    params[:github_repository_ids].each do |i|
-      rep = GithubRepository.find(i)
-      rep.tag_list.add params[:tag_with].split(',')
-      rep.save
+    if params[:github_repository_select]
+      select = CGI.parse params[:github_repository_select]
+      q = {}
+      select.each do |k, v|
+        if v.respond_to?(:first) && !v.first.blank?
+         q[k] = v.first
+        end
+      end
+      logger.info q
+      GithubRepository.search(q).each do |rep|
+        rep.tag_list.add params[:tag_with].split(',')
+        rep.save
+      end
+    else
+      params[:github_repository_ids].each do |i|
+        rep = GithubRepository.find(i)
+        rep.tag_list.add params[:tag_with].split(',')
+        rep.save
+        logger.info "Github Repository #{params[:github_repository_ids].to_s} tagged with [#{params[:tag_with]}]!"
+      end
     end
-    logger.info "Github Repository #{params[:github_repository_ids].to_s} tagged with [#{params[:tag_with]}]!"
     flash[:notice] = "GithubRepositories tagged with [#{params[:tag_with]}]!"
     redirect_to :back
   end
@@ -54,7 +69,7 @@ ActiveAdmin.register GithubRepository do
       input :type => :hidden, :name => :authenticity_token, :id => :authenticity_token, :value => form_authenticity_token
       table_for github_repositories, :paginator=>"true", :class=>"index_table", :id=>"github_repositories" do
 
-        column(check_box_tag("github_repository_ids[]", 'all')) do |repos|
+        column(check_box_tag("github_repository_select", params[:q].to_query)) do |repos|
           check_box_tag "github_repository_ids[]", repos.id
         end
         column("Name", :sortable => :name) do |repos|
