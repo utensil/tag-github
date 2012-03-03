@@ -60,3 +60,40 @@ redis-cli
 jQuery('table#github_repositories thead tr').prepend(jQuery('<th class="tag">Tag</th>'));
 jQuery('table#github_repositories tbody tr').prepend(jQuery('<td><input type="checkbox" /></td>'));
 jQuery('#titlebar_right .action_items').append(jQuery('<span class="action_item"><a href="#">Add Tags...</a></span>'))
+
+
+
+build table_for default_table tag_name default_class_name attributes set_attribute get_attribute attr has_attribute? remove_attribute id id! id= add_class remove_class class_names class_list parent parent= children assigns helpers add_child remove_child << children? parent? document content= get_elements_by_tag_name find_by_tag get_elements_by_class_name find_by_class content html_safe indent_level each to_str + to_ary to_a build_tag insert_tag current_dom_context with_current_dom_context within append_re...ure footer form h1 h2 h3 h4 h5 h6 head header hgroup hr html i iframe img input ins keygen kbd label legend li link map mark menu meta meter nav noscript object ol optgroup option output pre progress q s samp script section select small source span strong style sub summary sup table tbody td textarea tfoot th thead time title tr ul var video para text_node attributes_table_for blank_slate columns paginated_collection panel scopes_renderer sidebar_section status_tag active_admin_comments_for method_missing
+
+
+ [:build, :table_for, :default_table, :tag_name, :default_class_name, :attributes, :set_attribute, :get_attribute, :attr, :has_attribute?, :remove_attribute, :id, :id!, :id=, :add_class, :remove_class, :class_names, :class_list, :parent, :parent=, :children, :assigns, :helpers, :add_child, :remove_child, :<<, :children?, :parent?, :document, :content=, :get_elements_by_tag_name, :find_by_tag, :get_elements_by_class_name, :find_by_class, :content, :html_safe, :indent_level, :each, :to_str, :+, :to_ary, :to_a, :build_tag, :insert_tag, :current_dom_context,
+ :with_current_dom_context, :within, :append_return_block, :a, :abbr,
+ :address, :area, :article, :aside, :audio, :b, :base, :bdo, :blockquote,
+ :body, :br, :button, :canvas, :caption, :cite, :code, :col, :colgroup,
+ :command, :datalist, :dd, :del, :details, :dfn, :div, :dl, :dt, :em,
+ :embed, :fieldset, :figcaption, :figure, :footer, :form, :h1, :h2, :h3,
+  :h4, :h5, :h6, :head, :header, :hgroup, :hr, :html, :i, :iframe, :img,
+   :input, :ins, :keygen, :kbd, :label, :legend, :li, :link, :map, :mark,
+    :menu, :meta, :meter, :nav, :noscript, :object, :ol, :optgroup, :option,
+     :output, :pre, :progress, :q, :s, :samp, :script, :section, :select,
+     :small, :source, :span, :strong, :style, :sub, :summary, :sup, :table,
+      :tbody, :td, :textarea, :tfoot, :th, :thead, :time, :title, :tr, :ul,
+       :var, :video, :para, :text_node, :attributes_table_for, :blank_slate,
+        :columns, :paginated_collection, :panel, :scopes_renderer, :sidebar_section,
+         :status_tag, :active_admin_comments_for, :method_missing]
+
+
+[:collection_path, :collection_url, :new_resource_path, :new_resource_url, :resource_path,
+ :resource_url, :edit_resource_path, :edit_resource_url, :resource_class, :delete_all,
+  :tag, :_run__910948198__process_action__297690513__callbacks, :index, :index!, :show,
+  :show!, :new, :new!, :edit, :edit!, :create, :create!, :update, :update!,
+  :active_admin_template, :csv_filename, :run_build_callbacks, :run_create_callbacks,
+  :run_update_callbacks, :run_save_callbacks, :run_destroy_callbacks,
+  :begin_of_association... :view_context, :view_renderer, :view_assigns,
+   :template_exists?, :view_paths, :formats, :formats=, :locale, :locale=,
+   :_prefixes, :lookup_context, :details_for_lookup, :append_view_path,
+   :prepend_view_path, :env=, :env, :controller_name, :response, :request,
+   :headers=, :response=, :request=, :session, :params, :params=, :performed?,
+    :to_a, :middleware_stack, :middleware_stack?, :middleware_stack=, :response_body,
+     :action_name, :action_name=, :controller_path, :action_methods, :available_action?
+     , :config]         
