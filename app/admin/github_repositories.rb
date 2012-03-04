@@ -16,8 +16,6 @@ ActiveAdmin.register GithubRepository do
   filter :homepage_url
   filter :watchers
   filter :forks
-  filter :tag_list
-
 
   collection_action :delete_all, :method => :delete do
     GithubRepository.delete_all
@@ -35,20 +33,42 @@ ActiveAdmin.register GithubRepository do
         end
       end
       logger.info q
-      GithubRepository.search(q).each do |rep|
-        rep.tag_list.add params[:tag_with].split(',')
-        rep.save
-      end
+      reps = GithubRepository.search(q)
+    elsif(params[:github_repository_ids])
+      reps = GithubRepository.find(params[:github_repository_ids])
     else
-      params[:github_repository_ids].each do |i|
-        rep = GithubRepository.find(i)
-        rep.tag_list.add params[:tag_with].split(',')
-        rep.save
-        logger.info "Github Repository #{params[:github_repository_ids].to_s} tagged with [#{params[:tag_with]}]!"
-      end
+      raise 'Illegal tagging action!'
     end
-    flash[:notice] = "GithubRepositories tagged with [#{params[:tag_with]}]!"
+
+    reps.each do |rep|
+      case params[:commit]
+      when 'Add Tags'
+        rep.tag_list.add params[:tag_with].split(',')
+        flash[:notice] = "Chosen repositories tagged with [#{params[:tag_with]}]!"
+      when 'Update Tags'
+        rep.tag_list = params[:tag_with].split(',')
+        flash[:notice] = "Chosen repositories updated with tags [#{params[:tag_with]}]!"
+      when 'Remove Tags'
+        rep.tag_list.remove params[:tag_with].split(',')
+        flash[:notice] = "Chosen repositories removed tags [#{params[:tag_with]}]!"
+      when 'Clear Tags'
+        rep.tag_list = []
+        flash[:notice] = "Chosen repositories cleared all tags!"
+      else
+        rep.tag_list.add params[:tag_with].split(',')
+      end
+      rep.save
+    end
+
     redirect_to :back
+  end
+
+  collection_action :tags, :method => :get do
+    tags = ActsAsTaggableOn::Tag.search({:name_contains => params[:q]}).all
+
+    respond_to do |format|
+      format.json { render :json => tags }
+    end
   end
 
   action_item :only => :index do
@@ -61,15 +81,24 @@ ActiveAdmin.register GithubRepository do
     form :method => :post, :action => tag_admin_github_repositories_path do
       #label :for => :tag_with, :class => :label do 'Tag with:' end
       span do
-      input :type => :text, :name => :tag_with, :id => :tag_with, :placeholder => 'tags seperated by commas', :width => '50em'
+        input :type => :submit, :value => 'Add Tags', :name => 'commit'
       end
       span do
-      input :type => :submit, :value => 'Tag', :name => 'commit'
+        input :type => :submit, :value => 'Update Tags', :name => 'commit'
+      end
+      span do
+        input :type => :submit, :value => 'Remove Tags', :name => 'commit'
+      end
+      span do
+        input :type => :submit, :value => 'Clear Tags', :name => 'commit'
+      end
+      div do
+        input :type => :text, :name => :tag_with, :id => :tag_with, :placeholder => 'tags seperated by commas'
       end
       input :type => :hidden, :name => :authenticity_token, :id => :authenticity_token, :value => form_authenticity_token
       table_for github_repositories, :paginator=>"true", :class=>"index_table", :id=>"github_repositories" do
 
-        column(check_box_tag("github_repository_select", params[:q].to_query)) do |repos|
+        column(check_box_tag("github_repository_select", params[:q].is_a?(Hash)? params[:q].to_query : '')) do |repos|
           check_box_tag "github_repository_ids[]", repos.id
         end
         column("Name", :sortable => :name) do |repos|
@@ -99,7 +128,6 @@ ActiveAdmin.register GithubRepository do
           end
         end
       end
-      input :type => :submit, :value => 'Tag', :name => 'commit'
       #methods - Object.new.methods
     end
   end
@@ -109,7 +137,7 @@ ActiveAdmin.register GithubRepository do
       attributes_table_for github_repository do
         row("Owner") { |repos| repos.owner_account_name}
         row(:description)
-        row("Source") { |repos| link_to repos.html_url,  repos.html_url, :target => '_blank' }
+        row("Source") { |repos| link_to repos.html_url, repos.html_url, :target => '_blank' }
         row("Home Page") { |repos| link_to(repos.homepage_url, repos.homepage_url, :target => '_blank') unless repos.homepage_url.blank? || repos.homepage_url == repos.html_url }
         row(:updated_at)
         row("Tags") do |repos|

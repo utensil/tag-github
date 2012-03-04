@@ -126,4 +126,8 @@ ActiveAdmin.setup do |config|
   #
   # To load a javascript file:
   #   config.register_javascript 'my_javascript.js'
+  config.register_javascript 'jquery.tokeninput.js'
+  config.register_stylesheet 'token-input-facebook.css'
+  config.register_javascript 'active_admin_custom.js'
+
 end

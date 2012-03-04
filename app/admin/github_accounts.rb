@@ -19,6 +19,17 @@ ActiveAdmin.register GithubAccount do
     f.buttons
   end
 
+  member_action :update_repos, :method => :post do
+
+    GithubAccount.find(params[:id]).try(:async_pull_info)
+
+    redirect_to :back
+  end
+
+  action_item :only => :show do
+    link_to "Update Watched Repositories", update_repos_admin_github_account_path(github_account), :method => :post
+  end
+
   index :as => :grid do |acc|
     div do
       h4 acc.login_name

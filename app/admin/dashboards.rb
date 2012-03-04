@@ -39,6 +39,17 @@ ActiveAdmin::Dashboards.build do
     end
   end
 
+  section "Tags" do
+    div do
+      ul do
+        tag_counts = GithubRepository.tag_counts.sort_by { |t| -t.count}
+        tag_counts.each do |t|
+          li "#{t.name}(#{t.count})"
+        end
+      end
+    end
+  end
+
   # == Render Partial Section
   # The block is rendered within the context of the view, so you can
   # easily render a partial rather than build content in ruby.

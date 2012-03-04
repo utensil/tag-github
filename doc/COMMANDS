@@ -96,4 +96,7 @@ build table_for default_table tag_name default_class_name attributes set_attribu
    :headers=, :response=, :request=, :session, :params, :params=, :performed?,
     :to_a, :middleware_stack, :middleware_stack?, :middleware_stack=, :response_body,
      :action_name, :action_name=, :controller_path, :action_methods, :available_action?
-     , :config]         
+     , :config]
+
+
+bundle exec sidekiq -n resque

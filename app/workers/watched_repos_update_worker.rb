@@ -9,7 +9,7 @@ class WatchedReposUpdateWorker
       acc = GithubAccount.find_or_create_by_login_name(account_name)
 
       user_api_uri = "https://api.github.com/users/#{account_name}"
-      gu = JSON.parse(MiscUtil.uri_get(user_api_uri))
+      gu = JSON.parse(MiscUtil.uri_get(user_api_uri, logger))
 
       raise "login_name should be #{self.login_name}, got #{gu['login_name']}" if acc.login_name != gu['login']
 
@@ -28,7 +28,7 @@ class WatchedReposUpdateWorker
         i += 1
 
         watched_api_uri = "https://api.github.com/users/#{account_name}/watched?per_page=100&page=#{i}"
-        watched_reps = JSON.parse(MiscUtil.uri_get(watched_api_uri))
+        watched_reps = JSON.parse(MiscUtil.uri_get(watched_api_uri, logger))
 
         #conditon to stop the loop
         break if watched_reps.empty?

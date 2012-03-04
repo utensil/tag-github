@@ -171,6 +171,7 @@ DEPENDENCIES
   jquery-rails
   meta_search (>= 1.1.0.pre)
   rails (= 3.2.1)
+  redis
   sass-rails (~> 3.2.3)
   sidekiq
   sqlite3

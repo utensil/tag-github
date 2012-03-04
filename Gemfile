@@ -32,6 +32,8 @@ gem 'hpricot'
 
 gem 'acts-as-taggable-on', '~> 2.2.2'
 
+gem 'redis'
+
 group :development do
   gem 'thin'
 end
